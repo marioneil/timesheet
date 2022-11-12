@@ -1,0 +1,18 @@
+@import  "../../node_modules/bootstrap/scss/bootstrap.scss";
+
+$primary: #3fb247;
+$danger: #c4c946;
+
+$theme-colors: (
+  "danger": $danger
+);
+
+// Create your own map
+$custom-colors: (
+  "custom-color": #900
+);
+
+// Merge the maps
+$theme-colors: map-merge($theme-colors, $custom-colors);
+
+
