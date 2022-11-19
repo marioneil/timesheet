@@ -10,14 +10,15 @@ import {
   NavDropdown,
 } from "react-bootstrap";
 import reactLogo from "./assets/react.svg";
-import HeaderCard from "./components/card/HeaderCard";
+
 import NavigationMenu from "./components/NavigationMenu";
+import { Header } from "./components/tw/nav/Header";
 
 function App() {
   return (
     <>
-      <NavigationMenu />
-      <HeaderCard />
+
+      <Header />
 
       <p>
         <a href="#" className="text-primary">
