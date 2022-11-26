@@ -9,6 +9,15 @@ $theme-colors: (
   "danger": $danger
 );
 
+.dark {
+  background-color: #333;
+  color: #fff;
+}
+.light {
+  background-color: #fff;
+  color: #333;
+}
+
 // Create your own map
 //$custom-colors: (
 //  "custom-color": rgb(123, 76, 177)
@@ -17,5 +26,5 @@ $theme-colors: (
 // Merge the maps
 //$theme-colors: map-merge($theme-colors, $custom-colors);
 
-@import  "node_modules/bootstrap/scss/bootstrap";
+//@import  "node_modules/bootstrap/scss/bootstrap";
 

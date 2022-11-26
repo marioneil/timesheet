@@ -1,6 +1,6 @@
 
-import { useState } from "react";
-import "./scss/App.scss"
+import { useEffect, useState } from "react";
+//import "./scss/App.scss"
 import {
   Button,
   Container,
@@ -13,34 +13,19 @@ import reactLogo from "./assets/react.svg";
 
 import NavigationMenu from "./components/NavigationMenu";
 import { Header } from "./components/tw/nav/Header";
+import BodyCard from "./components/tw/nav/body/BodyCard";
+//import  BodyCard  from "./components/tw/BodyCard";
+
 
 function App() {
+
   return (
-    <>
+    <div className="m-8 border-solid border-4 border-black rounded  bg-white dark:bg-black" >
 
       <Header />
-
-      <p>
-        <a href="#" className="text-primary">
-          Primary link
-        </a>
-      </p>
-      <p>
-        <a href="#" className="text-secondary">
-          Secondary link
-        </a>
-      </p>
-      <p>
-        <a href="#" className="text-success">
-          Success link
-        </a>
-      </p>
-      <p>
-        <a href="#" className="text-danger">
-          Scss danger link
-        </a>
-      </p>
-    </>
+      <BodyCard/>
+ 
+    </div>
   );
 }
 
