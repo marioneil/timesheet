@@ -1,18 +1,36 @@
 //import Card from 'react-bootstrap/Card';
-import { BsDashCircleDotted } from 'react-icons/bs';
+import { useEffect, useState } from "react";
+import { BsDashCircleDotted } from "react-icons/bs";
 
 const myStyle = {
-    borderStyle: "dashed"
+  borderStyle: "dashed",
+};
+
+function BodyCard() {
+  const [toDo, setToDo] = useState<any[]>([]);
+  const fetchToDo = async () => {
+    const result = await fetch("http://localhost:5000");
+    const data = await result.json();
+    setToDo(data);
+    console.log(data);
   };
 
-  
-function BodyCard() {
- // return <Card style={myStyle} className='m-3 text-danger' body>
-  return <div className='m-3 p-3  border-2 bg-white dark:bg-slate-800'>
-    This is some text within a card body.
+  useEffect(() => {
+    fetchToDo();
+  }, []);
 
-    <p>
-        <a href="#" className="text-primary dark:text-sm dark:text-red-500 transition-all duration-1000">
+  // return <Card style={myStyle} className='m-3 text-danger' body>
+  return (
+    <div className="m-3 p-3  border-2 bg-white dark:bg-slate-800">
+      This is some text within a card body.
+      {toDo.map((x) => {
+        return <p key={x.id}>{x.title}</p>;
+      })}
+      <p>
+        <a
+          href="#"
+          className="text-primary dark:text-sm dark:text-red-500 transition-all duration-1000"
+        >
           Primary link
         </a>
       </p>
@@ -31,8 +49,9 @@ function BodyCard() {
           Scss danger link
         </a>
       </p>
-   </div>
-   // </Card>;
+    </div>
+  );
+  // </Card>;
 }
 
 export default BodyCard;
