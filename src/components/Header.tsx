@@ -1,5 +1,12 @@
 import { useEffect, useState } from "react";
 
+import {
+  BsFillCalendarFill,
+  BsCardList,
+  BsFillGearFill,
+  BsBoxArrowRight,
+} from "react-icons/bs";
+
 function Header() {
   const [theme, setTheme] = useState("light");
 
@@ -34,19 +41,24 @@ function Header() {
   });
 
   return (
-    <div className="flex justify-between p-2 ">
+    <div className="p-2 ">
       <div
-        className="text-white bg-black  dark:bg-white dark:text-black px-2 py-1"
+        className="text-white bg-black  dark:bg-white dark:text-black px-2 py-1 inline"
         onClick={toggleTheme}
       >
         M
       </div>
-      <div className="flex gap-4 ">
-        <button className="border-b-2 border-black pl-2 dark:border-white">
-          About
-        </button>
-        <button>Portfolio</button>
-        <button>Contacts</button>
+      <div className="flex border-2 justify-between my-8">
+        <div className="flex">
+          <div className="border-r-2 p-2">
+            <BsFillCalendarFill />
+          </div>
+          <BsCardList />
+          <BsFillGearFill />
+        </div>
+        <div className=" bg-yellow-600">
+          <BsBoxArrowRight />
+        </div>
       </div>
     </div>
   );

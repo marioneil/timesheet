@@ -1,4 +1,3 @@
-
 import { useEffect, useState } from "react";
 //import "./scss/App.scss"
 import {
@@ -12,19 +11,15 @@ import {
 import reactLogo from "./assets/react.svg";
 
 import NavigationMenu from "./components/NavigationMenu";
-import { Header } from "./components/tw/nav/Header";
-import BodyCard from "./components/tw/nav/body/BodyCard";
+import { Header } from "./components/Header";
+import BodyCard from "./components/BodyCard";
 //import  BodyCard  from "./components/tw/BodyCard";
 
-
 function App() {
-
   return (
-    <div className="m-8 border-solid border-4 border-black rounded  bg-white dark:bg-black" >
-
+    <div className="m-8 border-solid border-4 border-black rounded  bg-white dark:bg-black">
       <Header />
-      <BodyCard/>
- 
+      <BodyCard />
     </div>
   );
 }
