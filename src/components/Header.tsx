@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import "../scss/App.scss";
 
 import {
   BsFillCalendarFill,
@@ -9,6 +10,18 @@ import {
 
 function Header() {
   const [theme, setTheme] = useState("light");
+
+  const arrowCss = {
+    height: "20px",
+    width: "20px",
+    marginLeft: "30px",
+    marginTop: "-11px",
+    background: "red",
+    MozTransform: "rotate(45deg)",
+    //-moz-transform: rotate(45deg);
+    borderRight: "1px solid #000",
+    borderBottom: "1px solid #000",
+  };
 
   const toggleTheme = () => {
     console.log("in toggleTheme");
@@ -22,6 +35,10 @@ function Header() {
       document.append();
       localStorage.theme = "light";
     }
+  };
+
+  const showCalendar = () => {
+    console.log("clicked calendar");
   };
 
   useEffect(() => {
@@ -48,15 +65,23 @@ function Header() {
       >
         M
       </div>
-      <div className="flex border-2 justify-between my-8">
+      <div className="flex border-2 justify-between my-8 rounded">
         <div className="flex">
-          <div className="border-r-2 p-2">
-            <BsFillCalendarFill />
+          {/* <div id="myBox0" style={arrowCss}></div> */}
+          <div
+            id="myBox"
+            className="border-r-2 p-2 hover:bg-gray-300 hover:arrow"
+          >
+            <BsFillCalendarFill onClick={showCalendar} />
           </div>
-          <BsCardList />
-          <BsFillGearFill />
+          <div className="border-r-2 p-2 ">
+            <BsCardList />
+          </div>
+          <div className="border-r-2 p-2">
+            <BsFillGearFill />
+          </div>
         </div>
-        <div className=" bg-yellow-600">
+        <div className=" bg-yellow-600 border-l-2 p-2">
           <BsBoxArrowRight />
         </div>
       </div>

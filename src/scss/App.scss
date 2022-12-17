@@ -6,7 +6,7 @@ $danger: #c4c946;
 /* make the customizations */
 $theme-colors: (
   "info": tomato,
-  "danger": $danger
+  "danger": $danger,
 );
 
 .dark {
@@ -28,3 +28,32 @@ $theme-colors: (
 
 //@import  "node_modules/bootstrap/scss/bootstrap";
 
+.arrow {
+  height: 20px;
+  width: 20px;
+  margin-left: 30px;
+  margin-top: -11px;
+  background: red;
+  -moz-transform: rotate(45deg);
+  border-right: 1px solid #000;
+  border-bottom: 1px solid #000;
+}
+
+#mybox {
+  width: 200px;
+  height: 100px;
+  background-color: #ff0;
+  position: relative;
+}
+
+#mybox:after {
+  content: "";
+  border-color: #ff0 transparent transparent transparent;
+  border-style: solid;
+  border-width: 20px;
+  width: 0;
+  height: 0;
+  position: absolute;
+  bottom: -40px;
+  left: 20px;
+}
