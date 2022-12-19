@@ -14,13 +14,16 @@ import NavigationMenu from "./components/NavigationMenu";
 import { Header } from "./components/Header";
 import BodyCard from "./components/BodyCard";
 //import  BodyCard  from "./components/tw/BodyCard";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
+import TaskForm from "./components/TaskForm";
+import Home from "./components/Home";
 
 function App() {
   return (
-    <div className="m-8 border-solid border-4 border-black rounded  bg-white dark:bg-black">
-      <Header />
-      <BodyCard />
-    </div>
+    <Routes>
+      <Route path="/" element={<Home />} />
+      <Route path="/task" element={<TaskForm />} />
+    </Routes>
   );
 }
 

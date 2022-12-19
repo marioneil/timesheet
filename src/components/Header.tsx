@@ -8,6 +8,8 @@ import {
   BsBoxArrowRight,
 } from "react-icons/bs";
 
+import { useNavigate } from "react-router-dom";
+
 function Header() {
   const [theme, setTheme] = useState("light");
 
@@ -41,9 +43,15 @@ function Header() {
     console.log("clicked calendar");
   };
 
+  const navigate = useNavigate();
+
+  const showNewTaskForm = () => {
+    console.log("clicked new task form");
+    navigate("/task");
+  };
+
   useEffect(() => {
     console.log("in use Effect");
-    //    document.body.className = theme;
     if (
       localStorage.theme === "dark" ||
       (!("theme" in localStorage) &&
@@ -56,6 +64,8 @@ function Header() {
       setTheme("light");
     }
   });
+
+  const history = useNavigate();
 
   return (
     <div className="p-2 ">
@@ -75,7 +85,7 @@ function Header() {
             <BsFillCalendarFill onClick={showCalendar} />
           </div>
           <div className="border-r-2 p-2 ">
-            <BsCardList />
+            <BsCardList onClick={showNewTaskForm} />
           </div>
           <div className="border-r-2 p-2">
             <BsFillGearFill />
