@@ -50,6 +50,11 @@ function Header() {
     navigate("/task");
   };
 
+  const showNewTaskForm1 = () => {
+    console.log("clicked new task form");
+    navigate("/task1");
+  };
+
   useEffect(() => {
     console.log("in use Effect");
     if (
@@ -88,7 +93,7 @@ function Header() {
             <BsCardList onClick={showNewTaskForm} />
           </div>
           <div className="border-r-2 p-2">
-            <BsFillGearFill />
+            <BsFillGearFill onClick={showNewTaskForm1} />
           </div>
         </div>
         <div className=" bg-yellow-600 border-l-2 p-2">

@@ -17,13 +17,18 @@ import BodyCard from "./components/BodyCard";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import TaskForm from "./components/TaskForm";
 import Home from "./components/Home";
+import TaskForm1 from "./components/TaskForm1";
 
 function App() {
   return (
-    <Routes>
-      <Route path="/" element={<Home />} />
-      <Route path="/task" element={<TaskForm />} />
-    </Routes>
+    <div className="m-8 border-solid border-4 border-black rounded  bg-white dark:bg-black">
+      <Header />
+      <Routes>
+        <Route path="/" element={<BodyCard />} />
+        <Route path="/task" element={<TaskForm />} />
+        <Route path="/task1" element={<TaskForm1 />} />
+      </Routes>
+    </div>
   );
 }
 
