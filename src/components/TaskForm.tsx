@@ -15,7 +15,6 @@ const FormField: React.FC<{ label: string; placeholder: string }> = ({
   label,
   placeholder,
 }) => {
-  ``;
   return (
     <div className="px-3 grow">
       <label className=" text-sm font-medium text-green-700">{label}</label>
