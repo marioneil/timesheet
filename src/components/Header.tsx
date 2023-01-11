@@ -6,6 +6,7 @@ import {
   BsCardList,
   BsFillGearFill,
   BsBoxArrowRight,
+  BsFillHouseFill,
 } from "react-icons/bs";
 
 import { useNavigate } from "react-router-dom";
@@ -20,7 +21,6 @@ function Header() {
     marginTop: "-11px",
     background: "red",
     MozTransform: "rotate(45deg)",
-    //-moz-transform: rotate(45deg);
     borderRight: "1px solid #000",
     borderBottom: "1px solid #000",
   };
@@ -55,6 +55,11 @@ function Header() {
     navigate("/task1");
   };
 
+  const showHome = () => {
+    console.log("clicked new task form");
+    navigate("/");
+  };
+
   useEffect(() => {
     console.log("in use Effect");
     if (
@@ -82,7 +87,12 @@ function Header() {
       </div>
       <div className="flex border-2 justify-between my-8 rounded">
         <div className="flex">
-          {/* <div id="myBox0" style={arrowCss}></div> */}
+          <div
+            id="myBox"
+            className="border-r-2 p-2 hover:bg-gray-300 hover:arrow"
+          >
+            <BsFillHouseFill onClick={showHome} />
+          </div>
           <div
             id="myBox"
             className="border-r-2 p-2 hover:bg-gray-300 hover:arrow"

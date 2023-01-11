@@ -1,5 +1,4 @@
 import { PropsWithChildren, useState } from "react";
-import reactLogo from "./assets/react.svg";
 
 const SectionTitle: React.FC<PropsWithChildren> = ({ children }) => (
   <h2 className="px-2 text-xl pb-3 uppercase my-5 text-green-400 border-b border-dashed border-green-400">
