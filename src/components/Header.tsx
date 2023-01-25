@@ -9,7 +9,7 @@ import {
   BsFillHouseFill,
 } from "react-icons/bs";
 
-import { useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 
 function Header() {
   const [theme, setTheme] = useState("light");
@@ -39,27 +39,6 @@ function Header() {
     }
   };
 
-  const showCalendar = () => {
-    console.log("clicked calendar");
-  };
-
-  const navigate = useNavigate();
-
-  const showNewTaskForm = () => {
-    console.log("clicked new task form");
-    navigate("/task");
-  };
-
-  const showNewTaskForm1 = () => {
-    console.log("clicked new task form");
-    navigate("/task1");
-  };
-
-  const showHome = () => {
-    console.log("clicked new task form");
-    navigate("/");
-  };
-
   useEffect(() => {
     console.log("in use Effect");
     if (
@@ -73,9 +52,7 @@ function Header() {
       document.documentElement.classList.remove("dark");
       setTheme("light");
     }
-  });
-
-  const history = useNavigate();
+  }, []);
 
   return (
     <div className="p-2 ">
@@ -91,19 +68,22 @@ function Header() {
             id="myBox"
             className="border-r-2 p-2 hover:bg-gray-300 hover:arrow"
           >
-            <BsFillHouseFill onClick={showHome} />
+            <Link to="/">
+              <BsFillHouseFill />
+            </Link>
           </div>
           <div
             id="myBox"
             className="border-r-2 p-2 hover:bg-gray-300 hover:arrow"
           >
-            <BsFillCalendarFill onClick={showCalendar} />
+            <Link to="/">
+              <BsFillCalendarFill />
+            </Link>
           </div>
           <div className="border-r-2 p-2 ">
-            <BsCardList onClick={showNewTaskForm} />
-          </div>
-          <div className="border-r-2 p-2">
-            <BsFillGearFill onClick={showNewTaskForm1} />
+            <Link to="/task">
+              <BsCardList />
+            </Link>
           </div>
         </div>
         <div className=" bg-yellow-600 border-l-2 p-2">
