@@ -22,9 +22,7 @@ const CustomAlert: FC<{ message: string; type: AlertType }> = ({
 }) => {
   return (
     <div className="px-3 grow flex">
-      <span
-        className={"text-white border-2 rounded-md grow px-3 " + getClass(type)}
-      >
+      <span className={"text-white rounded-md grow px-3 " + getClass(type)}>
         {message}
       </span>
     </div>
