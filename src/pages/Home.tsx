@@ -1,13 +1,16 @@
 import { useEffect, useState } from "react";
 import { TaskCard } from "../components/TaskCard";
 import MyAlert, { AlertType } from "../components/CustomAlert";
+import { useAuthState } from "react-firebase-hooks/auth";
+import { auth } from "../firebase";
 
 function Home() {
   const [toDo, setToDo] = useState<any[]>([]);
   //var [messageClassName, setMessageClassName] = useState<string>("");
-  var [messageClassName, setMessageClassName] = useState<AlertType>("Info");
-  var [message, setMessage] = useState("");
-  var [updateCount, setUpdateCount] = useState(0);
+  const [messageClassName, setMessageClassName] = useState<AlertType>("Info");
+  const [message, setMessage] = useState("");
+  const [updateCount, setUpdateCount] = useState(0);
+  const [user] = useAuthState(auth);
 
   const displayMessage = (message: string, type: AlertType) => {
     setMessage(message);
@@ -16,7 +19,14 @@ function Home() {
   };
 
   const fetchToDo = async () => {
-    const result = await fetch("http://localhost:5000");
+    console.log("user 0 - " + user);
+    if (!user) return;
+
+    console.log("user - " + user);
+    const token = (await user.getIdToken()) || "";
+    const result = await fetch("http://localhost:5000", {
+      headers: { token: token },
+    });
     const data = await result.json();
     setToDo(data);
   };
@@ -24,7 +34,7 @@ function Home() {
   useEffect(() => {
     console.log("in Home useEffect");
     fetchToDo();
-  }, [message, updateCount]);
+  }, [message, updateCount, user]);
 
   return (
     <div>
