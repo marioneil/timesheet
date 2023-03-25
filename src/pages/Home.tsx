@@ -10,6 +10,7 @@ function Home() {
   const [messageClassName, setMessageClassName] = useState<AlertType>("Info");
   const [message, setMessage] = useState("");
   const [updateCount, setUpdateCount] = useState(0);
+  const [timerOn, setTimerOn] = useState(false);
   const [user] = useAuthState(auth);
 
   const displayMessage = (message: string, type: AlertType) => {
@@ -52,6 +53,9 @@ function Home() {
               timestampCreated={x.timestampCreated}
               title={x.title}
               displayMessage={displayMessage}
+              timeSpan={x.timespan}
+              setTimerOn={setTimerOn}
+              timerOn={timerOn}
             />
           )
 

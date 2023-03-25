@@ -1,4 +1,9 @@
-import { MouseEventHandler, PropsWithChildren, useState } from "react";
+import {
+  MouseEventHandler,
+  PropsWithChildren,
+  useEffect,
+  useState,
+} from "react";
 import { BsFillChatRightDotsFill } from "react-icons/bs";
 import MYButton from "./Button/CustomButton";
 import { AlertType } from "../components/CustomAlert";
@@ -8,19 +13,36 @@ interface TaskCardProps {
   title: string;
   timestampCreated: string;
   displayMessage: (message: string, type: AlertType) => void;
+  timeSpan: number;
+  setTimerOn: (flag: boolean) => void;
+  timerOn: boolean;
 }
 
-const MyButton: React.FC<PropsWithChildren> = () => {
-  return <button></button>;
-};
+function initTaskRunningState() {
+  console.log("init task Running to false");
+  return false;
+}
 export const TaskCard: React.FC<TaskCardProps> = ({
   id,
   title,
   timestampCreated,
   displayMessage,
+  timeSpan,
+  setTimerOn,
+  timerOn,
 }) => {
-  // var [messageClassName, setMessageClassName] = useState("");
-  //var [message, setMessage] = useState("");
+  //const [isTaskRunning, setTaskRuninng] = useState(false);
+  const [isTaskRunning, setTaskRuninng] = useState(() =>
+    initTaskRunningState()
+  );
+
+  const [duration, setDuration] = useState(0);
+
+  function handleTaskToggle() {
+    setTaskRuninng(!isTaskRunning);
+    setTimerOn(!isTaskRunning);
+  }
+
   const handleDelete = async () => {
     console.log("delete - " + id);
     const result = await fetch("http://localhost:5000/" + id, {
@@ -39,6 +61,38 @@ export const TaskCard: React.FC<TaskCardProps> = ({
     }
   };
 
+  function convertStoMs(seconds: number) {
+    let minutes = 0;
+    let hours = 0;
+    let extraSeconds = seconds % 60;
+
+    minutes = ~~(seconds / 60);
+    if (minutes >= 60) {
+      hours = ~~(minutes / 60);
+      minutes = minutes % 60;
+    }
+
+    //output.innerHTML += seconds + " == " + minutes + " : " + extraSeconds + "<br/>";
+    return `${hours} : ${minutes} : ${extraSeconds}`;
+  }
+
+  useEffect(() => {
+    const startStop = setInterval(() => {
+      if (isTaskRunning) {
+        //  setDuration(duration + 1);
+        //  console.log("setInt");
+        setDuration((prev) => {
+          return prev + 1;
+        });
+      }
+    }, 1000);
+    return () => {
+      clearInterval(startStop);
+    };
+  }, [isTaskRunning]);
+
+  var disableTimerButton = timerOn && !isTaskRunning;
+
   return (
     <div className=" m-2 w-full rounded-md border-2 p-2 shadow-lg  shadow-green-800 hover:bg-slate-400 md:w-3/4">
       <div className="font-bold">ID: {id}</div>
@@ -50,7 +104,17 @@ export const TaskCard: React.FC<TaskCardProps> = ({
       </div>
 
       <div>Desc</div>
-      <div className="flex flex-col justify-center sm:flex sm:flex-row sm:gap-4">
+      <div className="flex flex-col items-center justify-between sm:flex sm:flex-row sm:gap-4">
+        <button
+          disabled={disableTimerButton}
+          className="m-3 rounded-md border bg-orange-800 px-3 py-1"
+          // onClick={handleDelete.bind(null, id)}
+          onClick={handleTaskToggle}
+        >
+          {isTaskRunning ? "Stop Timer" : "Start Timer"}
+        </button>
+        {/* <p>{duration}</p> */}
+        <p>{convertStoMs(duration)}</p>
         <button
           className="m-3 rounded-md border bg-orange-800 px-3 py-1"
           // onClick={handleDelete.bind(null, id)}
