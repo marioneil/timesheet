@@ -99,7 +99,7 @@ function Header() {
                 id="myBox"
                 className="hover:arrow border-r-2 p-2 hover:bg-gray-300"
               >
-                <Link to="/">
+                <Link to="/users">
                   <BsFillCalendarFill />
                 </Link>
               </div>

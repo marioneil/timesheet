@@ -16,10 +16,18 @@ function Login() {
   const navigate = useNavigate();
 
   const login = async (email: string, password: string) => {
-    const user = await logInWithEmailAndPassword(email, password);
-    console.log("userv-" + user);
-    if (user === undefined) {
+    const userCredential = await logInWithEmailAndPassword(email, password);
+    console.log("userv-" + userCredential);
+    if (userCredential === undefined) {
       setMessage("Bad Credentials");
+    } else {
+      const token = (await userCredential.user.getIdToken()) || "";
+
+      const result = await fetch("http://localhost:5000/signup", {
+        headers: { token: token },
+        method: "POST",
+      });
+      // const data = await result.json();
     }
   };
 

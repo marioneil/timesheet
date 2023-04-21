@@ -9,12 +9,8 @@ import React, {
 import MyButton from "./Button/CustomButton";
 import MyAlert, { AlertType } from "./CustomAlert";
 import { auth } from "../firebase";
-
-const SectionTitle: React.FC<PropsWithChildren> = (props) => (
-  <div className="my-5 border-b border-dashed border-green-400 text-xl ">
-    {props.children}
-  </div>
-);
+import { Navigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 const FormField: React.FC<{
   label: string;
@@ -47,12 +43,6 @@ const FormField: React.FC<{
 };
 
 export default function TaskForm() {
-  useEffect(() => {
-    renderCount.current = renderCount.current + 1;
-
-    console.log("rendering Taskform: " + renderCount.current);
-  });
-
   const fName = "Task Name";
   var [taskName, setTaskName] = useState("");
   var [message, setMessage] = useState<string>("");
@@ -94,6 +84,34 @@ export default function TaskForm() {
       setMessageClassName("Warning");
     }
   };
+
+  async function isAdmin() {
+    let token = (await auth.currentUser?.getIdToken(true)) || "";
+
+    const result = await fetch("http://localhost:5000/isAdmin", {
+      headers: {
+        "Content-Type": "application/json",
+        token: token,
+      },
+      method: "POST",
+    });
+
+    const data = await result.json();
+    return data.admin;
+  }
+
+  useEffect(() => {
+    renderCount.current = renderCount.current + 1;
+
+    console.log("rendering Taskform: " + renderCount.current);
+  }, []);
+
+  useEffect(() => {
+    if (!isAdmin()) {
+      Navigate;
+    }
+  }, []);
+
   return (
     <div className="m-3 border-4   bg-white p-3 dark:bg-slate-800 ">
       {/* <div className="text-white  bg-green-400 ">{message}</div> */}

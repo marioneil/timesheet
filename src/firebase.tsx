@@ -39,7 +39,7 @@ const auth = getAuth(app);
 
 const logInWithEmailAndPassword = async (email: string, password: string) => {
   try {
-    await signInWithEmailAndPassword(auth, email, password);
+    return await signInWithEmailAndPassword(auth, email, password);
   } catch (e: any) {
     console.error(e.message);
     alert(e.message);

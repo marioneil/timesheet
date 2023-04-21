@@ -6,8 +6,10 @@ import { Route, Routes } from "react-router-dom";
 import { Header } from "./components/Header";
 import Login from "./components/Login";
 import { auth, logInWithEmailAndPassword } from "./firebase";
-import { useAuthState } from "react-firebase-hooks/auth";
+
 import Signup from "./components/Signup";
+import { Users } from "./pages/Users";
+import { ProtectedRoute } from "./components/ProtectedRoute";
 
 function App() {
   // const [user, loading, error] = useAuthState(auth);
@@ -23,6 +25,10 @@ function App() {
         <Route path="/task" element={<TaskForm />} />
         <Route path="/task1" element={<TaskForm1 />} />
         <Route path="/signup" element={<Signup />} />
+
+        <Route element={<ProtectedRoute redirectPath="/home" />}>
+          <Route path="/users" element={<Users />} />
+        </Route>
       </Routes>
     </div>
   );

@@ -7,6 +7,7 @@ import {
 import { BsFillChatRightDotsFill } from "react-icons/bs";
 import MYButton from "./Button/CustomButton";
 import { AlertType } from "../components/CustomAlert";
+import { auth } from "../firebase";
 
 interface TaskCardProps {
   id: string;
@@ -36,11 +37,33 @@ export const TaskCard: React.FC<TaskCardProps> = ({
     initTaskRunningState()
   );
 
-  const [duration, setDuration] = useState(0);
+  const [duration, setDuration] = useState(timeSpan);
 
   function handleTaskToggle() {
+    // if timer is running , save current time to DB
+    handleUpdateDuration();
     setTaskRuninng(!isTaskRunning);
     setTimerOn(!isTaskRunning);
+  }
+
+  async function handleUpdateDuration() {
+    let token = await auth.currentUser?.getIdToken(true);
+    if (token === undefined) {
+      token = "";
+    }
+    console.log("client token " + token);
+
+    const result = await fetch("http://localhost:5000/update/duration", {
+      headers: {
+        "Content-Type": "application/json",
+        token: token,
+      },
+      method: "PUT",
+      body: JSON.stringify({
+        id,
+        duration,
+      }),
+    });
   }
 
   const handleDelete = async () => {
