@@ -14,28 +14,31 @@ export const GoogleButton = () => {
     //const googleProvider = new GoogleAuthProvider();
 
     signInWithPopup(auth, provider)
-      .then((result) => {
+      .then(async (result) => {
+        result.user.getIdToken();
         console.log("In Then-Result");
         // This gives you a Google Access Token. You can use it to access the Google API.
-        const credential = GoogleAuthProvider.credentialFromResult(result);
-        // const token = credential.accessToken;
-        // The signed-in user info.
-        // const user = result.user;
-        // IdP data available using getAdditionalUserInfo(result)
-        // ...
+        const userCredential = GoogleAuthProvider.credentialFromResult(result);
+
+        let token = await result.user.getIdToken();
+        if (token === undefined) {
+          token = "";
+        }
+        console.log("client token " + token);
+
+        await fetch("http://localhost:5000/signup", {
+          headers: {
+            "Content-Type": "application/json",
+            token: token,
+          },
+          method: "POST",
+        });
+        ///////////////////////////
+        console.log("Created user ");
         console.log("Logged in with Goole");
       })
       .catch((error) => {
         console.log("In Catch");
-        // // Handle Errors here.
-        // const errorCode = error.code;
-        // const errorMessage = error.message;
-        // // The email of the user's account used.
-        // const email = error.customData.email;
-        // // The AuthCredential type that was used.
-        // const credential = GoogleAuthProvider.credentialFromError(error);
-        // // ...
-
         console.log(error);
         const email = error.customData.email;
         console.log(email);

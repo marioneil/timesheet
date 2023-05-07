@@ -8,19 +8,26 @@ export const ProtectedRoute = ({ redirectPath }: { redirectPath: string }) => {
   const [user, loading, error] = useAuthState(auth);
 
   async function verifyAdmin() {
-    const token = (await user?.getIdToken()) || "";
+    try {
+      const token = (await user?.getIdToken()) || "";
+      console.log("token - " + token);
 
-    const result = await fetch("http://localhost:5000/isAdmin", {
-      headers: {
-        "Content-Type": "application/json",
-        token,
-      },
-      method: "POST",
-    });
+      if (!token) return "";
 
-    const data = await result.json();
+      const result = await fetch("http://localhost:5000/isAdmin", {
+        headers: {
+          "Content-Type": "application/json",
+          token: token,
+        },
+        method: "POST",
+      });
+      console.log("after fetch");
+      const data = await result.json();
 
-    console.log(data);
+      console.log(data);
+    } catch (error) {
+      console.log(error);
+    }
   }
 
   useEffect(() => {

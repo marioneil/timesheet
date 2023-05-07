@@ -22,10 +22,22 @@ function Login() {
     }
     //const auth = getAuth();
     createUserWithEmailAndPassword(auth, email, password)
-      .then((userCredential) => {
-        // Signed in
-        // const user = userCredential.user;
-        // ...
+      .then(async (userCredential) => {
+        /////////////////
+        let token = await userCredential.user.getIdToken(true);
+        if (token === undefined) {
+          token = "";
+        }
+        console.log("client token " + token);
+
+        const result = await fetch("http://localhost:5000/signup", {
+          headers: {
+            "Content-Type": "application/json",
+            token: token,
+          },
+          method: "POST",
+        });
+        ///////////////////////////
         console.log("Created user ");
       })
       .catch((error) => {
