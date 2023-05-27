@@ -9,6 +9,7 @@ interface UserModalProps {
   id: string;
   email: string;
   role: string;
+  isAdmin: boolean;
 }
 
 export const UserModal2: React.FC<UserModalProps> = ({
@@ -17,7 +18,15 @@ export const UserModal2: React.FC<UserModalProps> = ({
   id,
   email,
   role,
+  isAdmin,
 }) => {
+  function disableRoleEditing() {
+    console.log(`isAdmin ${isAdmin}`);
+
+    if (isAdmin) return false;
+    return true;
+  }
+
   return (
     <>
       <Transition appear show={showModal} as={Fragment}>
@@ -85,7 +94,11 @@ export const UserModal2: React.FC<UserModalProps> = ({
                         </label>
                       </div>
                       <div className="">
-                        <select className="h-9 w-72 border px-4" value={role}>
+                        <select
+                          className="h-9 w-72 border px-4"
+                          value={role}
+                          disabled={disableRoleEditing()}
+                        >
                           <option value=""></option>
                           <option value="USER">USER</option>
                           <option value="ADMIN">ADMIN</option>

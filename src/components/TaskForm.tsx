@@ -48,6 +48,7 @@ export default function TaskForm() {
   var [message, setMessage] = useState<string>("");
   var [messageClassName, setMessageClassName] = useState<AlertType>("Info");
   var renderCount = useRef<number>(0);
+  const navigate = useNavigate();
 
   //React.FormEvent<EventTarget>
   const handleClick = async (e: React.MouseEvent) => {
@@ -84,33 +85,6 @@ export default function TaskForm() {
       setMessageClassName("Warning");
     }
   };
-
-  async function isAdmin() {
-    let token = (await auth.currentUser?.getIdToken(true)) || "";
-
-    const result = await fetch("http://localhost:5000/isAdmin", {
-      headers: {
-        "Content-Type": "application/json",
-        token: token,
-      },
-      method: "POST",
-    });
-
-    const data = await result.json();
-    return data.admin;
-  }
-
-  useEffect(() => {
-    renderCount.current = renderCount.current + 1;
-
-    console.log("rendering Taskform: " + renderCount.current);
-  }, []);
-
-  useEffect(() => {
-    if (!isAdmin()) {
-      Navigate;
-    }
-  }, []);
 
   return (
     <div className="m-3 border-4   bg-white p-3 dark:bg-slate-800 ">

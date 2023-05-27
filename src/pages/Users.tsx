@@ -9,7 +9,7 @@ import { UserModal2 } from "../components/UserModal2";
 
 export const Users = () => {
   const [user] = useAuthState(auth);
-
+  const [isAdministrator, setIsAdministrator] = useState<boolean>(false);
   const [appUsers, setAppUsers] = useState<any[]>([]);
   const [showModal, setShowModal] = useState<boolean>(false);
   const [currentEditedUser, setcurrentEditedUser] = useState<{
@@ -29,13 +29,37 @@ export const Users = () => {
     });
     const data = await result.json();
     setAppUsers(data);
-    console.log(data);
+    // console.log(data);
   };
 
   useEffect(() => {
-    console.log("in Home useEffect");
+    //  console.log("in Home useEffect");
     fetchUsers();
+    isAdmin();
   }, []);
+
+  async function isAdmin() {
+    console.log("inside isAdmin()");
+    let token = await auth.currentUser?.getIdToken(true);
+
+    const result = await fetch("http://localhost:5000/isAdmin", {
+      headers: {
+        "Content-Type": "application/json",
+        token: token || "",
+      },
+      method: "POST",
+    });
+
+    const data = await result.json();
+    console.log(` data.admin - ${data.admin}`);
+    //return data.admin;
+    setIsAdministrator(data.admin);
+  }
+
+  // isAdmin().then((ret_val) => {
+  //   //you can access b9oolean here in ret_val
+  //   setIsAdministrator(ret_val) ;
+  // });
 
   return (
     <>
@@ -88,6 +112,7 @@ export const Users = () => {
           id={currentEditedUser.id}
           email={currentEditedUser.email}
           role={currentEditedUser.role}
+          isAdmin={isAdministrator}
         />
       )}
     </>
