@@ -29,11 +29,9 @@ export const Users = () => {
     });
     const data = await result.json();
     setAppUsers(data);
-    // console.log(data);
   };
 
   useEffect(() => {
-    //  console.log("in Home useEffect");
     fetchUsers();
     isAdmin();
   }, []);
@@ -55,11 +53,6 @@ export const Users = () => {
     //return data.admin;
     setIsAdministrator(data.admin);
   }
-
-  // isAdmin().then((ret_val) => {
-  //   //you can access b9oolean here in ret_val
-  //   setIsAdministrator(ret_val) ;
-  // });
 
   return (
     <>
@@ -113,6 +106,7 @@ export const Users = () => {
           email={currentEditedUser.email}
           role={currentEditedUser.role}
           isAdmin={isAdministrator}
+          fetchUsers={fetchUsers}
         />
       )}
     </>

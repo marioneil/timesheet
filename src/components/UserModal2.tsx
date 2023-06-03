@@ -1,6 +1,6 @@
 import { Dialog, Transition } from "@headlessui/react";
 import { Fragment, useState } from "react";
-
+import { auth } from "../firebase";
 import React from "react";
 
 interface UserModalProps {
@@ -10,6 +10,7 @@ interface UserModalProps {
   email: string;
   role: string;
   isAdmin: boolean;
+  fetchUsers: () => void;
 }
 
 export const UserModal2: React.FC<UserModalProps> = ({
@@ -19,9 +20,51 @@ export const UserModal2: React.FC<UserModalProps> = ({
   email,
   role,
   isAdmin,
+  fetchUsers,
 }) => {
+  const [userRole, setUserRole] = useState(role);
+
+  async function saveUser() {
+    console.log(`Save`);
+
+    let token = await auth.currentUser?.getIdToken(true);
+    if (token === undefined) {
+      token = "";
+    }
+
+    const result = await fetch("http://localhost:5000/update/user", {
+      headers: {
+        "Content-Type": "application/json",
+        token: token,
+      },
+      method: "PUT",
+      body: JSON.stringify({
+        userId: id,
+        userRole,
+      }),
+    });
+    setShowModal(false);
+    fetchUsers();
+  }
+
+  function handleChange(event: React.FormEvent) {
+    console.log("Test.change");
+    console.log(event.target); // in chrome => <select class="form-control" id="searchType" data-reactid=".0.0.0.0.3.1">...</select>
+
+    // Use cast to any works but is not type safe
+    var unsafeSearchTypeValue = (event.target as any).value;
+
+    console.log(unsafeSearchTypeValue); // in chrome => B
+
+    // this.setState({
+    //     selectedValue: unsafeSearchTypeValue
+    // });
+
+    setUserRole(unsafeSearchTypeValue);
+  }
+
   function disableRoleEditing() {
-    console.log(`isAdmin ${isAdmin}`);
+    // console.log(`isAdmin ${isAdmin}`);
 
     if (isAdmin) return false;
     return true;
@@ -96,8 +139,9 @@ export const UserModal2: React.FC<UserModalProps> = ({
                       <div className="">
                         <select
                           className="h-9 w-72 border px-4"
-                          value={role}
+                          value={userRole}
                           disabled={disableRoleEditing()}
+                          onChange={handleChange}
                         >
                           <option value=""></option>
                           <option value="USER">USER</option>
@@ -110,7 +154,7 @@ export const UserModal2: React.FC<UserModalProps> = ({
                     <button
                       type="button"
                       className="inline-flex justify-center rounded-md border border-transparent bg-green-200 px-4 py-2 text-sm font-medium text-blue-900 hover:bg-blue-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2"
-                      onClick={() => setShowModal(false)}
+                      onClick={() => saveUser()}
                     >
                       Save
                     </button>
